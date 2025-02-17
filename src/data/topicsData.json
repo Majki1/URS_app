@@ -34,9 +34,60 @@
     "title": "Integer Ranges and Overflow/Underflow",
     "summary": "Ranges of signed and unsigned integers representable with a given number of bits, and examples of overflow and underflow.",
     "content": [
-      "Signed integers can represent positive and negative numbers.",
-      "Unsigned integers can only represent non-negative numbers.",
-      "Explanation of overflow and underflow with examples."
+      "Signed integers can represent both positive and negative numbers. Commonly on ARM, two’s complement is used for signed representation.",
+      "Unsigned integers can represent only non-negative numbers, but provide a larger maximum positive value (for the same bit-width) compared to signed integers.",
+      "Examples of ranges for an 8-bit type:",
+      "  • Signed (two’s complement): −128 to +127 (0x80 to 0x7F in hex)",
+      "  • Unsigned: 0 to 255 (0x00 to 0xFF in hex)",
+      "Examples of ranges for a 16-bit type:",
+      "  • Signed (two’s complement): −32768 to +32767 (0x8000 to 0x7FFF)",
+      "  • Unsigned: 0 to 65535 (0x0000 to 0xFFFF)",
+      "Examples of ranges for a 32-bit type:",
+      "  • Signed (two’s complement): −2147483648 to +2147483647 (0x80000000 to 0x7FFFFFFF)",
+      "  • Unsigned: 0 to 4294967295 (0x00000000 to 0xFFFFFFFF)",
+      "Overflow occurs when a value exceeds the maximum representable value. For example, if an 8-bit signed integer already at +127 (+0x7F) is incremented by 1, it will wrap around to −128 (+0x80 in two’s complement).",
+      "Underflow occurs when a value goes below the minimum representable value. For example, if an 8-bit unsigned integer is 0, subtracting 1 will wrap around to 255 (0xFF).",
+      "Both overflow and underflow can lead to unexpected results in arithmetic if not carefully handled."
+    ]
+  },
+  {
+    "id": "twos_complement",
+    "title": "Two's Complement Representation",
+    "summary": "How negative numbers are stored in two's complement form, common in ARM systems.",
+    "content": [
+      "Two's complement is the most common method for representing signed integers in modern computers, including ARM-based microcontrollers.",
+      "In two's complement, a negative number is formed by inverting all bits of its positive counterpart, then adding 1 to the result.",
+      "The most significant bit (MSB) indicates the sign: 0 for non-negative, 1 for negative values.",
+      "Advantages over older sign-magnitude or one’s complement methods: simpler hardware for arithmetic, single representation for zero, easier addition and subtraction logic.",
+      "Example (8-bit):",
+      "  • +5 is 0000 0101 in binary (0x05).",
+      "  • −5 is calculated by inverting 0000 0101 => 1111 1010, then adding 1 => 1111 1011 (0xFB).",
+      "Range for an n-bit two’s complement integer: −2^(n−1) to +2^(n−1)−1 (e.g., for 8-bit: −128 to +127).",
+      "Overflow rules: adding two large positive numbers can wrap around to a negative result, and adding two large negative numbers can wrap around to positive, depending on the carry and overflow flags."
+    ]
+  },
+  {
+    "id": "bitwise_and_or",
+    "title": "Bitwise AND, OR",
+    "summary": "Fundamental bitwise operations that combine two binary values bit-by-bit.",
+    "content": [
+      "Bitwise AND (&) takes two binary numbers and performs logical AND on each pair of bits. A bit in the result is 1 only if both corresponding bits are 1.",
+      "Bitwise OR (|) takes two binary numbers and performs logical OR on each pair of bits. A bit in the result is 1 if either (or both) corresponding bits are 1.",
+      "These operations are often used for masking (e.g., clearing or setting specific bits in a register), toggling specific hardware flags, or checking certain bit patterns.",
+      "Example: 0x0C & 0x05 => (1100₂ & 0101₂) = 0100₂ = 0x04.",
+      "Example: 0x0C | 0x05 => (1100₂ | 0101₂) = 1101₂ = 0x0D."
+    ]
+  },
+  {
+    "id": "bitwise_xor",
+    "title": "Bitwise XOR",
+    "summary": "Exclusive OR operation that sets each bit to 1 if the bits differ, 0 if they are the same.",
+    "content": [
+      "Bitwise XOR (^) compares two bits and returns 1 if exactly one bit is set, otherwise 0.",
+      "Commonly used for toggling bits (e.g., x ^= 1 << n flips bit n in x), checksums, cryptographic or simple obfuscation, and parity calculations.",
+      "Unlike OR, if both bits are 1, the XOR result bit is 0. If both bits are 0, the result bit is also 0.",
+      "Example: 0x0C ^ 0x05 => (1100₂ ^ 0101₂) = 1001₂ = 0x09.",
+      "A property of XOR is that if A ^ B = C, then A ^ C = B and B ^ C = A. This invertibility can be used to swap variables without a temporary."
     ]
   },
   {
