@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import "./TopicBrowser.css";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export default function TopicBrowser({
   topics,
   completedTopics,
   setCompletedTopics,
+  edit_1,
 }) {
   // Keep track of which topic is selected
   const [selectedTopicId, setSelectedTopicId] = useState(null);
@@ -81,7 +84,9 @@ export default function TopicBrowser({
           <div className="topic-page">
             <h2>{selectedTopic.title}</h2>
             {selectedTopic.content.map((para, idx) => (
-              <p key={idx}>{para}</p>
+              <ReactMarkdown key={idx} remarkPlugins={[remarkGfm]}>
+                {para}
+              </ReactMarkdown>
             ))}
 
             {/* Conditionally render buttons */}
