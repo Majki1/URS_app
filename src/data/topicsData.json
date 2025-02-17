@@ -51,6 +51,42 @@
     ]
   },
   {
+    "id": "numbers_with_without_sign",
+    "title": "Numbers with and without Sign",
+    "summary": "Detailed explanation of numbers with and without sign, and their differences.",
+    "content": [
+      "Signed and unsigned numbers differ based on how they represent values using bits.",
+      "Signed numbers (signed integers) use the highest bit as a sign bit. They typically use the two's complement method to represent positive and negative numbers.",
+      "Unsigned numbers use all bits to represent non-negative numbers only.",
+
+      "Comparison Example (Signed vs. Unsigned):",
+      "  Which is greater: 0xFFFFFFFF or 0x00000001?",
+      "  - In signed numbers, 0xFFFFFFFF represents -1, so 0x00000001 (1) is greater.",
+      "  - In unsigned numbers, 0xFFFFFFFF represents 4294967295, so it is greater than 0x00000001.",
+
+      "Signed Number Range:",
+      "  For n-bit signed integers (using two's complement), the range is:",
+      "  - Minimum: -2^(n-1)",
+      "  - Maximum: 2^(n-1) - 1",
+      "  Example (8-bit): Range is from -128 to 127.",
+
+      "Unsigned Number Range:",
+      "  For n-bit unsigned integers, the range is:",
+      "  - Minimum: 0",
+      "  - Maximum: 2^n - 1",
+      "  Example (8-bit): Range is from 0 to 255.",
+
+      "Signed Numbers Use Two's Complement:",
+      "  - Two's complement is used to store signed numbers because it simplifies addition and subtraction.",
+      "  - Negative numbers are represented by inverting all bits and adding one.",
+
+      "Signed vs. Unsigned Comparison in ARM:",
+      "  In ARM assembly, CMP instructions compare values and set flags.",
+      "  Signed comparisons use flags N (negative) and V (overflow).",
+      "  Unsigned comparisons use the C (carry) and Z (zero) flags."
+    ]
+  },
+  {
     "id": "twos_complement",
     "title": "Two's Complement Representation",
     "summary": "How negative numbers are stored in two's complement form, common in ARM systems.",
@@ -93,30 +129,112 @@
   {
     "id": "endianness",
     "title": "Endianness",
-    "summary": "Concept of endianness.",
+    "summary": "How multi-byte data is stored in memory, focusing on big-endian vs. little-endian formats.",
     "content": [
-      "Big-endian: Most significant byte stored first.",
-      "Little-endian: Least significant byte stored first."
+      "Endianness describes how a multi-byte data type (e.g., a 32-bit integer) is arranged in memory.",
+      "Big-endian format stores the most significant byte (MSB) at the lowest memory address, and the least significant byte (LSB) at the highest address.",
+      "Little-endian format stores the least significant byte (LSB) at the lowest memory address, and the most significant byte (MSB) at the highest address.",
+      "ARM Cortex-M microcontrollers typically use little-endian format by default.",
+      "Example: Consider the 32-bit value 0x12345678 in memory:",
+      "  • Big-endian layout in memory (low to high addresses):",
+      "      Address A: 0x12",
+      "      Address A+1: 0x34",
+      "      Address A+2: 0x56",
+      "      Address A+3: 0x78",
+      "  • Little-endian layout in memory (low to high addresses):",
+      "      Address A: 0x78",
+      "      Address A+1: 0x56",
+      "      Address A+2: 0x34",
+      "      Address A+3: 0x12",
+      "Many networking protocols (e.g., TCP/IP) use big-endian, but most modern desktop and embedded CPUs (like Intel x86 and ARM Cortex-M) use little-endian.",
+      "Be mindful of endianness when working with direct memory operations (e.g., DMA, peripheral registers) or when exchanging data between heterogeneous systems."
     ]
   },
   {
     "id": "sign_extension",
     "title": "Sign Extension",
-    "summary": "Explanation of sign extension with an example.",
+    "summary": "Explanation of sign extension, how it works, and examples.",
     "content": [
-      "Process of extending a number with fewer bits to a larger number of bits.",
-      "Preserves the value and sign of the number.",
-      "Example with a negative number."
+      "Sign extension is the process of increasing the number of bits of a binary number while preserving its value and sign.",
+      "This is crucial when converting smaller integers (e.g., 8-bit) to larger integers (e.g., 16-bit or 32-bit) without changing their numeric meaning.",
+      "In two's complement representation, sign extension involves copying the sign bit (the leftmost bit) into the new high-order bits.",
+      "The sign bit is 0 for positive numbers and 1 for negative numbers.",
+
+      "Example 1 (Positive Number):",
+      "  • 8-bit number:  0000 0101 (5 in decimal)",
+      "  • Sign-extended to 16-bit: 0000 0000 0000 0101 (still 5 in decimal)",
+
+      "Example 2 (Negative Number using Two's Complement):",
+      "  • 8-bit number:  1111 1011 (−5 in decimal, two's complement form)",
+      "  • Sign-extended to 16-bit: 1111 1111 1111 1011 (still −5 in decimal)",
+
+      "How to Verify Using Two's Complement:",
+      "  • Invert the bits of 1111 1111 1111 1011 → 0000 0000 0000 0100",
+      "  • Add 1: 0000 0000 0000 0101 → 5 (with a negative sign from the sign bit)",
+
+      "Example 3 (Using ARM Instructions):",
+      "  • ARM provides instructions like SXTB (Sign-Extend Byte) and SXTH (Sign-Extend Halfword).",
+      "  • For example:",
+      "      MOV R0, #0xFB ; R0 = 0xFB (-5 in 8-bit)",
+      "      SXTB R1, R0   ; Sign-extend to 32-bit → R1 = 0xFFFFFFFB (-5 in 32-bit)",
+
+      "Summary:",
+      "  • Sign extension is used during operations like loading smaller integers (e.g., bytes or halfwords) into larger registers.",
+      "  • Essential for arithmetic operations to produce correct results, especially for signed numbers.",
+      "  • ARM Cortex-M processors handle sign extension efficiently using dedicated instructions."
     ]
   },
   {
     "id": "addressing_modes",
     "title": "Addressing Modes",
-    "summary": "Explanation of addressing modes with examples (pre/post [with/without update]/immediate).",
+    "summary": "Detailed explanation of different addressing modes in ARM with examples, including offset, immediate, pre-index, post-index, and pre-index with update.",
     "content": [
-      "Offset in register: Uses content of registers for address calculation.",
-      "Immediate Offset: Uses immediate value as offset.",
-      "Pre-index, Post-index, and Pre-index with Update."
+      "Addressing modes define how the processor calculates the memory address for an instruction.",
+      "ARM supports various addressing modes to access memory efficiently.",
+
+      "1. Offset Addressing (Register Offset):",
+      "   • Uses the value stored in a register to compute the memory address.",
+      "   • Example:",
+      "       MOV R1, #0x1000     ; Load base address into R1",
+      "       MOV R2, #4          ; Load offset into R2",
+      "       LDR R3, [R1, R2]    ; Load from address (R1 + R2) → R3",
+      "     Here, the effective address is 0x1000 + 4 = 0x1004.",
+
+      "2. Immediate Offset Addressing:",
+      "   • Adds an immediate value directly to the base register to compute the address.",
+      "   • Example:",
+      "       MOV R0, #0x20008000 ; Load base address into R0",
+      "       LDR R1, [R0, #8]    ; Load from address (R0 + 8) → R1",
+      "     Here, the effective address is 0x20008000 + 8 = 0x20008008.",
+
+      "3. Pre-indexed Addressing:",
+      "   • Adds the offset to the base register before accessing memory.",
+      "   • The base register value remains unchanged unless specified with an update.",
+      "   • Example (without update):",
+      "       MOV R0, #0x20008000",
+      "       LDR R1, [R0, #4]    ; Address = R0 + 4, R0 unchanged",
+      "     Example (with update):",
+      "       LDR R1, [R0, #4]!   ; Address = R0 + 4, R0 updated to R0 + 4",
+
+      "4. Post-indexed Addressing:",
+      "   • First accesses memory using the base register, then adds the offset to the base register.",
+      "   • Example:",
+      "       MOV R0, #0x20008000",
+      "       LDR R1, [R0], #4    ; Address = R0, then R0 updated to R0 + 4",
+
+      "5. Comparison of Pre-index and Post-index:",
+      "   • Pre-index updates the base address before memory access.",
+      "   • Post-index updates the base address after memory access.",
+      "   • Example with both:",
+      "       MOV R0, #0x1000",
+      "       LDR R1, [R0, #4]!   ; R1 = *(R0 + 4), R0 = R0 + 4",
+      "       LDR R2, [R0], #4    ; R2 = *R0, R0 = R0 + 4",
+
+      "Summary:",
+      "  • Offset addressing uses registers or immediate values without changing the base address.",
+      "  • Pre-indexing calculates the address before access and optionally updates the base register.",
+      "  • Post-indexing calculates the address from the base register and then updates it.",
+      "  • ARM's flexible addressing modes optimize memory operations for speed and efficiency."
     ]
   },
   {
@@ -124,64 +242,309 @@
     "title": "STMxx and LDMxx Instructions",
     "summary": "Explanation of instructions for writing and reading multiple registers.",
     "content": [
-      "STMxx: Stores multiple registers in memory locations.",
-      "LDMxx: Loads values from multiple registers.",
-      "Diagrams for writing and reading from multiple registers."
+      "STMxx (Store Multiple): Stores multiple registers in memory locations.",
+      "LDMxx (Load Multiple): Loads values from multiple registers.",
+      "These instructions are commonly used for saving and restoring register states, such as during subroutine calls or context switching.",
+
+      "STMxx and LDMxx Suffixes:",
+      "The suffixes specify the order in which registers are stored/loaded and whether the base register is updated:",
+
+      "1. IA (Increment After):",
+      "   • Stores/loads registers starting at the base address and increments the address after each operation.",
+      "   • Example: STMIA R0!, {R1-R3} stores R1 to R3 starting at R0 and updates R0.",
+
+      "2. IB (Increment Before):",
+      "   • Increments the address before storing/loading registers.",
+      "   • Example: STMIB R0!, {R1-R3} increments R0 first, then stores R1 to R3.",
+
+      "3. DA (Decrement After):",
+      "   • Stores/loads registers starting from the base address and decrements the address after each operation.",
+      "   • Example: STMDA R0!, {R1-R3} stores R1 to R3 and then updates R0 to the last stored address.",
+
+      "4. DB (Decrement Before):",
+      "   • Decrements the address before storing/loading registers.",
+      "   • Example: STMDB R0!, {R1-R3} decrements R0 first, then stores R1 to R3.",
+
+      "Use Cases of STMxx and LDMxx:",
+      "• STMFD (Store Multiple Full Descending) is commonly used for pushing registers onto the stack.",
+      "• LDMFD (Load Multiple Full Descending) is used for popping registers from the stack.",
+
+      "Summary:",
+      "• STMxx and LDMxx are efficient for saving/restoring multiple registers at once.",
+      "• IA, IB, DA, and DB suffixes control the memory access direction and address updates.",
+      "• These instructions are crucial for subroutine calls, interrupts, and context switches."
     ]
   },
   {
     "id": "stack_implementation",
     "title": "Stack Implementation",
-    "summary": "Implementation of Full Descending, Empty Descending, Full Ascending, and Empty Ascending stacks using instructions for writing multiple registers.",
+    "summary": "Implementation of Full Descending, Empty Descending, Full Ascending, and Empty Ascending stacks using STM and LDM instructions.",
     "content": [
-      "Full: Stack Pointer points to the last occupied address.",
-      "Empty: Stack Pointer points to the next free address.",
-      "Descending: New data stored at lower memory addresses.",
-      "Ascending: New data stored at higher memory addresses.",
-      "PUSH and POP instructions."
+      "The stack is a data structure that follows the Last In, First Out (LIFO) principle.",
+      "ARM processors use the Stack Pointer (SP) to manage the stack.",
+      "Different types of stacks are defined based on the direction of memory growth and the behavior of the stack pointer:",
+
+      "1. Full Stack:",
+      "   • The Stack Pointer (SP) points to the last occupied memory address.",
+      "   • Data is stored starting from the address pointed to by SP.",
+      "   • Example: When pushing, SP is decremented before storing data (in descending stacks) or incremented after storing data (in ascending stacks).",
+
+      "2. Empty Stack:",
+      "   • The Stack Pointer (SP) points to the next free memory address.",
+      "   • Data is stored at the address below or above the address pointed to by SP depending on the stack direction.",
+      "   • Example: When pushing, SP is decremented after storing data (in descending stacks) or incremented before storing data (in ascending stacks).",
+
+      "3. Descending Stack:",
+      "   • The stack grows downward, towards lower memory addresses.",
+      "   • When pushing, SP is decremented; when popping, SP is incremented.",
+
+      "4. Ascending Stack:",
+      "   • The stack grows upward, towards higher memory addresses.",
+      "   • When pushing, SP is incremented; when popping, SP is decremented.",
+
+      "Using STM and LDM Instructions for Stack Implementations:",
+      "STM (Store Multiple) and LDM (Load Multiple) instructions are used to push and pop multiple registers to and from the stack.",
+      "The suffixes determine how the SP is updated during the operation:",
+
+      "1. Full Descending Stack (STMFD / LDMFD):",
+      "   • Full: SP points to the last occupied address.",
+      "   • Descending: The stack grows downwards (towards lower addresses).",
+      "   • Uses: STMFD (Store Multiple Full Descending) for PUSH and LDMFD (Load Multiple Full Descending) for POP.",
+      "   • STMFD is an alias for STMDB (Store Multiple Decrement Before).",
+      "   • LDMFD is an alias for LDMIA (Load Multiple Increment After).",
+
+      "2. Empty Descending Stack (STMFA / LDMFA):",
+      "   • Empty: SP points to the next free address.",
+      "   • Descending: The stack grows downwards.",
+      "   • Uses: STMFA (Store Multiple Full Ascending) and LDMFA (Load Multiple Full Ascending).",
+      "   • STMFA is an alias for STMDA (Store Multiple Decrement After).",
+      "   • LDMFA is an alias for LDMIB (Load Multiple Increment Before).",
+
+      "3. Full Ascending Stack (STMFA / LDMFA):",
+      "   • Full: SP points to the last occupied address.",
+      "   • Ascending: The stack grows upwards (towards higher addresses).",
+      "   • Uses: STMFA (Store Multiple Full Ascending) and LDMFA (Load Multiple Full Ascending).",
+      "   • STMFA is an alias for STMIB (Store Multiple Increment Before).",
+      "   • LDMFA is an alias for LDMDA (Load Multiple Decrement After).",
+
+      "4. Empty Ascending Stack (STMIA / LDMIA):",
+      "   • Empty: SP points to the next free address.",
+      "   • Ascending: The stack grows upwards.",
+      "   • Uses: STMIA (Store Multiple Increment After) for PUSH and LDMIA (Load Multiple Increment After) for POP.",
+
+      "Summary:",
+      "• Full Descending: STMFD (alias STMDB) and LDMFD (alias LDMIA).",
+      "• Empty Descending: STMFA (alias STMDA) and LDMFA (alias LDMIB).",
+      "• Full Ascending: STMFA (alias STMIB) and LDMFA (alias LDMDA).",
+      "• Empty Ascending: STMIA and LDMIA.",
+      "The proper selection of stack type is crucial in subroutine calls, interrupts, and context switching."
     ]
   },
   {
     "id": "conditional_instructions",
     "title": "Conditional and Unconditional Instructions, Condition Codes",
-    "summary": "Explanation of conditional and unconditional instructions and condition codes for numbers with and without sign.",
+    "summary": "Detailed explanation of conditional and unconditional instructions, condition codes, and signed vs. unsigned comparisons.",
     "content": [
-      "Unconditional branch instructions.",
-      "Conditional codes and their meanings.",
-      "Signed vs. Unsigned numbers."
+      "Conditional and unconditional instructions in ARM are used to control the flow of execution based on condition flags set by previous operations.",
+
+      "1. Unconditional Instructions:",
+      "   • These instructions always execute, regardless of condition flags.",
+      "   • Example: B (Branch) for jumping to a different part of the program.",
+      "   • Example: BL (Branch with Link) for calling a subroutine.",
+
+      "2. Conditional Instructions:",
+      "   • These instructions execute only if specific condition codes are met.",
+      "   • ARM instructions can be made conditional by appending a condition suffix (e.g., EQ, NE, GT).",
+      "   • Conditional execution reduces the need for branch instructions, improving efficiency.",
+
+      "3. Condition Codes and Their Meanings:",
+      "   Condition codes are set by arithmetic and logical instructions (e.g., CMP, SUB).",
+      "   The four primary condition flags in ARM are:",
+      "   • N (Negative): Set if the result is negative.",
+      "   • Z (Zero): Set if the result is zero.",
+      "   • C (Carry): Set if there was a carry or borrow in an operation (for unsigned operations).",
+      "   • V (Overflow): Set if there was an overflow (for signed operations).",
+
+      "4. Commonly Used Condition Codes:",
+      "   Condition codes are added as suffixes to instructions (e.g., BEQ for 'Branch if Equal').",
+      "   Here are the most common condition codes:",
+      "   • EQ (Equal): Z = 1 (Result was zero)",
+      "   • NE (Not Equal): Z = 0",
+      "   • GT (Greater Than): Z = 0 and N = V (Signed comparison)",
+      "   • LT (Less Than): N ≠ V (Signed comparison)",
+      "   • GE (Greater or Equal): N = V (Signed comparison)",
+      "   • LE (Less or Equal): Z = 1 or N ≠ V (Signed comparison)",
+      "   • CS (Carry Set): C = 1 (Used for unsigned comparison, same as HS)",
+      "   • CC (Carry Clear): C = 0 (Unsigned comparison, same as LO)",
+      "   • HS (Higher or Same): C = 1 (Unsigned comparison, same as CS)",
+      "   • LO (Lower): C = 0 (Unsigned comparison, same as CC)",
+      "   • HI (Higher): C = 1 and Z = 0 (Unsigned comparison)",
+      "   • LS (Lower or Same): C = 0 or Z = 1 (Unsigned comparison)",
+
+      "5. Difference Between Signed and Unsigned Comparison Codes:",
+      "   The difference between signed and unsigned comparisons lies in how they interpret the condition flags:",
+
+      "   • Signed Comparisons (e.g., GT, LT, GE, LE):",
+      "     Use the N (Negative) and V (Overflow) flags.",
+      "     Example: CMP R0, R1 sets N and V flags for signed comparison.",
+      "     If R0 is greater than R1 (signed), GT is true (N = V).",
+
+      "   • Unsigned Comparisons (e.g., HS, LO, HI, LS):",
+      "     Use the C (Carry) and Z (Zero) flags.",
+      "     Example: CMP R0, R1 sets the C flag for unsigned comparison.",
+      "     If R0 is greater than or equal to R1 (unsigned), HS is true (C = 1).",
+
+      "6. Examples of Conditional Instructions:",
+      "   • BEQ (Branch if Equal): Branch if Z = 1 (result is zero).",
+      "   • BNE (Branch if Not Equal): Branch if Z = 0.",
+      "   • BGT (Branch if Greater Than): Branch if N = V and Z = 0.",
+      "   • BLE (Branch if Less or Equal): Branch if Z = 1 or N ≠ V.",
+      "   • BHS (Branch if Higher or Same): Branch if C = 1 (unsigned comparison).",
+
+      "7. Example of Signed vs. Unsigned Comparison:",
+      "   Suppose R0 = 0xFFFFFFFF (-1 signed, large unsigned) and R1 = 1:",
+      "   • CMP R0, R1 sets condition flags.",
+      "   • BGT (signed) will not branch because -1 is not greater than 1.",
+      "   • BHI (unsigned) will branch because 0xFFFFFFFF is greater than 1 in unsigned terms.",
+
+      "Summary:",
+      "• Unconditional instructions always execute; conditional instructions execute based on flags.",
+      "• ARM provides rich conditional suffixes (EQ, NE, GT, LT, HS, LO, etc.).",
+      "• Signed comparisons rely on N and V flags, while unsigned comparisons rely on C and Z flags.",
+      "• Understanding the difference between signed and unsigned comparison codes is crucial for writing efficient ARM assembly programs."
     ]
-  },
-  {
-    "id": "numbers_with_without_sign",
-    "title": "Numbers with and without Sign",
-    "summary": "Explanation of numbers with and without sign.",
-    "content": ["Reference to presentation Chapter_06_ARM_Flow_Control.pdf."]
   },
   {
     "id": "cmp_tst_teq",
     "title": "CMP, TST, TEQ Instructions and Their Application",
-    "summary": "Explanation of CMP, TST, and TEQ instructions and their use.",
-    "content": ["Reference to presentation Chapter_06_ARM_Flow_Control.pdf."]
+    "summary": "Detailed explanation of CMP, TST, and TEQ instructions, their functions, and examples.",
+    "content": [
+      "CMP, TST, and TEQ are ARM instructions used for comparison and testing without storing results, but they update status flags.",
+
+      "1. CMP (Compare):",
+      "  - Compares two values by subtracting one from the other without storing the result.",
+      "  - Updates status flags: Z (zero), N (negative), C (carry), V (overflow).",
+      "  - Example:",
+      "    MOV r0, #5",
+      "    MOV r1, #10",
+      "    CMP r0, r1 ; Compares 5 and 10",
+      "    BEQ equal ; Branch if equal",
+      "    BNE not_equal ; Branch if not equal",
+      "  - Here, N flag is set because the result (5 - 10) is negative",
+
+      "2. TST (Test):",
+      "  - Performs a bitwise AND operation and updates flags without storing the result.",
+      "  - Commonly used for checking specific bits in a register.",
+      "  - Example:",
+      "    MOV r0, #5 ; Binary 0101",
+      "    MOV r1, #3 ; Binary 0011",
+      "    TST r0, r1 ; 0101 & 0011 = 0001",
+      "    BEQ zero_result ; Branch if result is zero",
+      "    BNE non_zero ; Branch if result is non-zero",
+
+      "3. TEQ (Test Equivalence):",
+      "  - Performs a bitwise XOR operation and updates flags.",
+      "  - Used to detect differences between values.",
+      "  - Example:",
+      "    MOV R0, #5 ; Binary 0101",
+      "    MOV R1, #5 ; Binary 0101",
+      "    TEQ R0, R1 ; XOR 0101 ^ 0101 = 0000",
+      "    BEQ equal ; Branch if zero (identical values)",
+      "    BNE not_equal ; Branch if non-zero",
+
+      "Flags Set by CMP, TST, TEQ:",
+      "  - Z (Zero): Set if result is zero.",
+      "  - N (Negative): Set if result is negative.",
+      "  - C (Carry): Set if an unsigned overflow occurs.",
+      "  - V (Overflow): Set if a signed overflow occurs.",
+
+      "Signed vs. Unsigned Comparisons:",
+      "  - Signed comparisons use N and V flags to determine results.",
+      "  - Unsigned comparisons use C and Z flags.",
+      "  - Example: CMP with signed numbers checks if N = V for greater than, while with unsigned numbers checks if C = 1."
+    ]
   },
   {
     "id": "program_loops",
     "title": "Program Loops in Assembly",
-    "summary": "Implementation of program loops in assembly (for/while/do while).",
-    "content": ["Example: Implementing a for loop in assembly."]
+    "summary": "Detailed implementation of program loops in ARM assembly (for, while, do-while).",
+    "content": [
+      "Program loops in ARM assembly are implemented using conditional branches (B, BEQ, BNE, BLT, BGT) and status flags (N, C, Z, V)",
+
+      "1. FOR Loop:",
+      "   A 'for' loop in C is typically structured as:",
+      "     for (int i = 10; i > 0; i--) { // loop body }",
+      "   ARM Assembly implementation:",
+      "     MOV r0, #10        ; i = 10",
+      "   for_loop:",
+      "     CMP r0, #0         ; Check condition (i > 0?)",
+      "     BLE end_loop       ; Exit if i <= 0",
+      "     SUB r0, r0, #1     ; i--",
+      "     B for_loop         ; Jump back to start",
+      "   end_loop:            ; End of loop",
+
+      "Alternate Method (Incrementing i from 0 to 10):",
+      "     MOV r0, #0         ; i = 0",
+      "     MOV r1, #0         ; sum = 0",
+      "   check:",
+      "     CMP r0, #10        ; Check if i < 10",
+      "     BGE end_loop       ; Exit if i >= 10",
+      "     ADD r1, r1, r0     ; sum += i",
+      "     ADD r0, r0, #1     ; i++",
+      "     B check            ; Repeat loop",
+
+      "2. WHILE Loop:",
+      "   A 'while' loop in C is structured as:",
+      "     int i = 10;",
+      "     while (i > 0) { i--; }",
+      "   ARM Assembly implementation:",
+      "     MOV r0, #10         ; i = 10",
+      "   while_loop:",
+      "     CMP r0, #0          ; Check condition (i > 0?)",
+      "     BLE end_while       ; Exit if i <= 0",
+      "     SUB r0, r0, #1      ; i--",
+      "     B while_loop        ; Repeat loop",
+      "   end_while:            ; End of loop",
+
+      "3. DO-WHILE Loop:",
+      "   A 'do-while' loop in C is structured as:",
+      "     int i = 10;",
+      "     do { i--; } while (i > 0);",
+      "   ARM Assembly implementation:",
+      "     MOV r0, #10         ; i = 10",
+      "   do_while_loop:",
+      "     SUB r0, r0, #1      ; i--",
+      "     CMP r0, #0          ; Check condition (i > 0?)",
+      "     BGT do_while_loop   ; Repeat if greater than zero",
+      "   end_do_while:         ; End of loop",
+
+      "Summary:",
+      "• 'for' loops combine initialization, condition check, and increment in one structure.",
+      "• 'while' loops check the condition before the loop body.",
+      "• 'do-while' loops execute the body at least once before checking the condition.",
+      "• ARM loops rely heavily on CMP (compare) and conditional branch instructions like BGT, BLE, and BGE."
+    ]
   },
   {
     "id": "argument_passing",
     "title": "Argument Passing According to APCS",
     "summary": "How arguments are passed according to the ARM Procedure Call Standard (APCS).",
-    "content": ["Reference to presentation or documentation on APCS."]
+    "content": [
+      "The ARM Procedure Call Standard (APCS) specifies how arguments are passed in function calls.",
+      "The first four arguments are passed in registers r0 to r3.",
+      "Additional arguments are pushed onto the stack in reverse order.",
+      "The caller is responsible for cleaning up the stack after the call."
+    ]
   },
   {
     "id": "subroutine_calls",
     "title": "Subroutine Calls and the LR Register",
     "summary": "How subroutines call other subroutines and the issue with the LR register.",
     "content": [
-      "Explanation of nested subroutine calls.",
-      "Potential problem with LR register being overwritten."
+      "Subroutines can call other subroutines, leading to nested calls.",
+      "The Link Register (LR) stores the return address for a subroutine call.",
+      "Nested calls can overwrite the LR, causing problems when returning to the original caller.",
+      "To prevent this, the LR can be saved on the stack before nested calls and restored before returning."
     ]
   },
   {
@@ -189,35 +552,45 @@
     "title": "Preserving Register Values in Subroutine Calls",
     "summary": "The need for preserving register values and who is responsible for it during subroutine calls.",
     "content": [
-      "Importance of saving register values.",
-      "Caller vs. callee responsibility."
+      "Some registers are designated as callee-saved, meaning the called subroutine must preserve their values.",
+      "Other registers are caller-saved, meaning the caller must save them if needed.",
+      "The APCS defines which registers are callee-saved and which are caller-saved."
     ]
   },
   {
     "id": "calling_assembly_from_c",
     "title": "Calling Assembly Function from C",
     "summary": "How to call an assembly function from C and pass 5 arguments.",
-    "content": ["Example code snippet."]
+    "content": [
+      "To call an assembly function from C, declare it as extern in C.",
+      "Pass arguments according to the APCS (first four in registers, rest on the stack)."
+    ]
   },
   {
     "id": "calling_c_from_assembly",
     "title": "Calling C Function from Assembly",
     "summary": "How to call a C function from assembly and pass 5 arguments.",
-    "content": ["Example code snippet."]
+    "content": [
+      "To call a C function from assembly, follow the APCS for argument passing.",
+      "Use the BL instruction to branch to the C function."
+    ]
   },
   {
     "id": "variables_assembly_to_c",
     "title": "Variables from Assembly in C",
     "summary": "How to use variables defined in assembly within C code.",
-    "content": ["Inline assembly example.", "Global variables example."]
+    "content": [
+      "Variables defined in assembly can be accessed in C using the extern keyword.",
+      "Global variables defined in assembly are visible to C code."
+    ]
   },
   {
     "id": "variables_c_to_assembly",
     "title": "Variables from C in Assembly",
     "summary": "How to use variables defined in C within assembly code.",
     "content": [
-      "Extern keyword example.",
-      "Passing variables as arguments example."
+      "Variables defined in C can be accessed in assembly using the extern keyword.",
+      "C variables can be passed as arguments to assembly functions."
     ]
   },
   {
@@ -225,8 +598,8 @@
     "title": "Configuration of Internal Clock Sources",
     "summary": "Internal clock sources in the microcontroller and their configuration (HSI, MSI, PLL).",
     "content": [
-      "Explanation of different clock sources.",
-      "Conceptual configuration."
+      "The microcontroller has internal clock sources like HSI (high-speed internal), MSI (multi-speed internal), and PLL (phase-locked loop).",
+      "These sources can be configured to provide different clock frequencies for the system."
     ]
   },
   {
@@ -234,29 +607,36 @@
     "title": "Interrupts and Polling",
     "summary": "Differences, advantages, and disadvantages of interrupts and polling.",
     "content": [
-      "Explanation of interrupt mechanism.",
-      "Comparison with polling."
+      "Interrupts are hardware signals that cause the processor to suspend its current execution and jump to an interrupt handler.",
+      "Polling involves repeatedly checking for a condition, which can be inefficient."
     ]
   },
   {
     "id": "lr_register_interrupts",
     "title": "LR Register in Interrupt Handling",
     "summary": "Use of LR register in interrupt handling.",
-    "content": ["Explanation of LR's role in returning from interrupts."]
+    "content": [
+      "The LR register is used to store the return address for an interrupt handler.",
+      "This allows the processor to resume execution where it left off after handling the interrupt."
+    ]
   },
   {
     "id": "auto_unstacking",
     "title": "Auto-(Un)stacking in Interrupt Handling",
     "summary": "Auto-stacking and unstacking of registers during interrupt handling.",
-    "content": ["Explanation of automatic saving and restoring of registers."]
+    "content": [
+      "The processor automatically saves certain registers on the stack when an interrupt occurs.",
+      "This preserves the state of the interrupted program.",
+      "The registers are automatically restored when the interrupt handler returns."
+    ]
   },
   {
     "id": "interrupt_vector_table",
     "title": "Interrupt Vector Table and Negative Interrupt Numbers",
     "summary": "Use of the interrupt vector table and negative interrupt numbers.",
     "content": [
-      "Structure and purpose of the interrupt vector table.",
-      "Significance of negative interrupt numbers."
+      "The interrupt vector table is a table of addresses for interrupt handlers.",
+      "Negative interrupt numbers are used to index into this table."
     ]
   },
   {
@@ -264,44 +644,52 @@
     "title": "Enabling and Prioritizing Interrupts",
     "summary": "Enabling and setting priorities for interrupts.",
     "content": [
-      "How to enable and disable interrupts.",
-      "Interrupt priority levels."
+      "Interrupts can be enabled or disabled.",
+      "Interrupt priorities determine which interrupt is handled first if multiple interrupts occur."
     ]
   },
   {
     "id": "interrupt_masking",
     "title": "Interrupt Masking",
     "summary": "Masking of interrupts.",
-    "content": ["Selective disabling of interrupts."]
+    "content": [
+      "Interrupt masking allows selective disabling of interrupts.",
+      "This can be used to prevent certain interrupts from interrupting others."
+    ]
   },
   {
     "id": "interrupt_handling",
     "title": "Interrupt Handling",
     "summary": "Process of handling interrupts.",
-    "content": ["Steps involved in responding to interrupts."]
+    "content": [
+      "Interrupt handling involves saving the processor state, jumping to the interrupt handler, executing the handler, restoring the processor state, and resuming the interrupted program."
+    ]
   },
   {
     "id": "systick_timer",
     "title": "SysTick Timer",
     "summary": "SysTick timer's mode of operation and application.",
     "content": [
-      "Explanation of SysTick timer functionality.",
-      "Configuration and use cases."
+      "The SysTick timer is a system timer that can be used for various timing tasks.",
+      "It can generate periodic interrupts or be used for delay generation."
     ]
   },
   {
     "id": "external_interrupts_gpio",
     "title": "External Interrupts on GPIO Pins",
     "summary": "External interrupts on GPIO pins and their configuration.",
-    "content": ["How to configure GPIO pins for external interrupts."]
+    "content": [
+      "GPIO pins can be configured to trigger external interrupts.",
+      "This allows the processor to respond to events in the external environment."
+    ]
   },
   {
     "id": "fixed_point_numbers",
     "title": "Fixed-Point Numbers",
     "summary": "Advantages and disadvantages of fixed-point numbers.",
     "content": [
-      "Explanation of fixed-point representation.",
-      "Conversion between fixed-point and decimal."
+      "Fixed-point numbers represent fractional values using integers.",
+      "They are less complex than floating-point numbers but have limited range and precision."
     ]
   },
   {
@@ -309,111 +697,152 @@
     "title": "Floating-Point Numbers",
     "summary": "Potential problems and solutions associated with floating-point numbers.",
     "content": [
-      "Rounding errors.",
-      "Error accumulation.",
-      "Inaccurate arithmetic."
+      "Floating-point numbers can suffer from rounding errors, error accumulation, and inaccurate arithmetic.",
+      "These problems can be mitigated by using appropriate algorithms and data types."
     ]
   },
   {
     "id": "structures_for_peripherals",
     "title": "Using Structures for Peripherals in C",
     "summary": "Use of structures in C for accessing microcontroller peripheral registers.",
-    "content": ["Example with GPIO registers."]
+    "content": [
+      "Structures in C can be used to represent the registers of microcontroller peripherals.",
+      "This allows for more readable and maintainable code."
+    ]
   },
   {
     "id": "gpio_modes",
     "title": "GPIO Modes of Operation",
     "summary": "GPIO modes of operation (BSRR, BRR, MODE registers).",
     "content": [
-      "Explanation of different GPIO modes.",
-      "Functions of BSRR, BRR, and MODE registers."
+      "GPIO pins can be configured in different modes, such as input, output, or alternate function.",
+      "The BSRR, BRR, and MODE registers are used to control the mode and state of GPIO pins."
     ]
   },
   {
     "id": "pull_up_resistors",
     "title": "Pull-up Resistors",
     "summary": "Function and purpose of pull-up resistors.",
-    "content": ["Explanation of pull-up resistor behavior."]
+    "content": [
+      "Pull-up resistors are used to ensure a default high logic level on a pin.",
+      "They are useful for buttons and other inputs."
+    ]
   },
   {
     "id": "pull_down_resistors",
     "title": "Pull-down Resistors",
     "summary": "Function and purpose of pull-down resistors.",
-    "content": ["Explanation of pull-down resistor behavior."]
+    "content": [
+      "Pull-down resistors are used to ensure a default low logic level on a pin.",
+      "They are useful for certain types of sensors."
+    ]
   },
   {
     "id": "open_drain_outputs",
     "title": "Open-Drain Outputs",
     "summary": "Mode of operation and application of open-drain outputs.",
-    "content": ["Explanation of open-drain output behavior."]
+    "content": [
+      "Open-drain outputs can only pull the pin low.",
+      "They are used in shared bus configurations."
+    ]
   },
   {
     "id": "schmitt_trigger",
     "title": "Schmitt Trigger",
     "summary": "Mode of operation and application of Schmitt trigger.",
-    "content": ["Explanation of Schmitt trigger functionality."]
+    "content": [
+      "Schmitt triggers are used to convert noisy signals into clean digital signals.",
+      "They have hysteresis, which means the input voltage required to switch the output is different depending on the current output state."
+    ]
   },
   {
     "id": "numeric_keypad",
     "title": "Numeric Keypad 4x3 and Debounce Problem",
     "summary": "Functioning and reading of a simple numeric 4x3 keypad and the debounce problem.",
-    "content": ["Explanation of keypad scanning.", "Debouncing techniques."]
+    "content": [
+      "A 4x3 numeric keypad is a common input device.",
+      "Scanning is used to read the pressed key.",
+      "Debouncing techniques are needed to prevent multiple readings from a single key press."
+    ]
   },
   {
     "id": "rtc",
     "title": "RTC and Its Applications",
     "summary": "RTC and its applications, including the problem of oscillator accuracy.",
     "content": [
-      "Explanation of Real-Time Clock (RTC).",
-      "Use cases and challenges."
+      "RTC stands for Real-Time Clock.",
+      "It is used to keep track of time.",
+      "Oscillator accuracy is important for RTC applications."
     ]
   },
   {
     "id": "timer_input_capture",
     "title": "Timer Input Capture Mode",
     "summary": "Use of timer in input capture mode.",
-    "content": ["Conceptual explanation."]
+    "content": [
+      "Timer input capture mode can be used to measure the frequency or pulse width of a signal."
+    ]
   },
   {
     "id": "timer_output_compare",
     "title": "Timer Output Compare Mode",
     "summary": "Use of timer in output compare mode with toggle change on external pin.",
-    "content": ["Conceptual explanation and sketch."]
+    "content": [
+      "Timer output compare mode can be used to generate PWM signals or trigger events at specific times."
+    ]
   },
   {
     "id": "timer_pwm_mode",
     "title": "Timer PWM Mode",
     "summary": "Use of timer in PWM mode.",
-    "content": ["Conceptual explanation and sketches for different PWM modes."]
+    "content": [
+      "Timer PWM mode can be used to generate PWM signals for controlling motors or other devices."
+    ]
   },
   {
     "id": "dma_mode",
     "title": "DMA Mode",
     "summary": "DMA mode of operation and application.",
-    "content": ["Conceptual explanation."]
+    "content": [
+      "DMA stands for Direct Memory Access.",
+      "It allows peripherals to transfer data directly to or from memory without CPU intervention."
+    ]
   },
   {
     "id": "ad_da_converters",
     "title": "AD and DA Converters",
     "summary": "Quantization error, resolution of AD converter, AD conversion modes, analog watchdog, and DA converter operation.",
-    "content": ["Explanation of ADC and DAC.", "Error considerations."]
+    "content": [
+      "AD converters convert analog signals to digital values.",
+      "DA converters convert digital values to analog signals.",
+      "Quantization error and resolution are important considerations for AD converters."
+    ]
   },
   {
     "id": "i2c",
     "title": "I2C",
     "summary": "I2C bus operation, communication example, and arbitration.",
-    "content": ["Explanation of I2C protocol.", "Addressing and data transfer."]
+    "content": [
+      "I2C is a two-wire serial bus protocol.",
+      "It is used for communication between microcontrollers and peripherals."
+    ]
   },
   {
     "id": "spi",
     "title": "SPI",
     "summary": "SPI bus operation.",
-    "content": ["Explanation of SPI protocol."]
+    "content": [
+      "SPI is a four-wire serial bus protocol.",
+      "It is used for high-speed communication between microcontrollers and peripherals."
+    ]
   },
   {
     "id": "uart",
     "title": "Serial Communication via UART",
     "summary": "Serial communication using UART - synchronization, frame, communication parameters.",
-    "content": ["Explanation of UART communication."]
+    "content": [
+      "UART stands for Universal Asynchronous Receiver-Transmitter.",
+      "It is used for serial communication between devices."
+    ]
   }
 ]

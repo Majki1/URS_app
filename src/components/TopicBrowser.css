@@ -1,3 +1,4 @@
+/* TopicBrowser.css */
 .topic-browser {
   display: flex;
   gap: 1rem;
@@ -19,6 +20,7 @@
   border-radius: 4px;
   transition: background 0.2s ease;
 }
+
 .topic-list li:hover {
   background: #ddd;
 }
@@ -35,7 +37,6 @@
   border-radius: 6px;
 }
 
-/* You can also style the 'Complete Lesson' button if you like */
 .topic-page button {
   margin-top: 1rem;
   padding: 0.5rem 1rem;

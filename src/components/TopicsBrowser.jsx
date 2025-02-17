@@ -1,38 +1,49 @@
 import React, { useState } from "react";
-import "./TopicBrowser.css"; // for styling if needed
+import "./TopicBrowser.css";
 
-export default function TopicBrowser({ topics }) {
+export default function TopicBrowser({
+  topics,
+  completedTopics,
+  setCompletedTopics,
+}) {
   // Keep track of which topic is selected
   const [selectedTopicId, setSelectedTopicId] = useState(null);
 
-  // Keep track of completed topics (an array of IDs)
-  const [completedTopics, setCompletedTopics] = useState([]);
-
-  // Find the selected topic object from the array
+  // The topic currently displayed on the right
   const selectedTopic = topics.find((t) => t.id === selectedTopicId);
 
-  // Determine the index of the selected topic (for moving to the next one)
+  // Find index of the selected topic so we can move to the next
   const selectedIndex = topics.findIndex((t) => t.id === selectedTopicId);
 
-  // Handler when user clicks "Complete Lesson"
+  // Check if current topic is completed
+  const isCompleted =
+    selectedTopicId && completedTopics.includes(selectedTopicId);
+
   function handleCompleteLesson() {
     if (!selectedTopicId) return;
 
-    // Mark this topic as completed if not already
-    if (!completedTopics.includes(selectedTopicId)) {
+    // If not already completed, add it
+    if (!isCompleted) {
       setCompletedTopics((prev) => [...prev, selectedTopicId]);
     }
 
-    // Move to the next topic (if it exists)
+    // Move to next topic if possible
     const nextIndex = selectedIndex + 1;
     if (nextIndex < topics.length) {
-      // Set the next topic as selected
       setSelectedTopicId(topics[nextIndex].id);
     } else {
-      // If we're already on the last topic, you could do something else:
-      // e.g., alert("All topics completed!") or setSelectedTopicId(null)
       alert("Congratulations! You have completed all topics.");
     }
+  }
+
+  function handleRevisitLesson() {
+    if (!selectedTopicId) return;
+
+    // Remove from completed topics
+    if (isCompleted) {
+      setCompletedTopics((prev) => prev.filter((id) => id !== selectedTopicId));
+    }
+    // We stay on the same topic, no jump to next
   }
 
   return (
@@ -42,7 +53,7 @@ export default function TopicBrowser({ topics }) {
         <h2>Topics</h2>
         <ul className="topic-list">
           {topics.map((topic) => {
-            const isCompleted = completedTopics.includes(topic.id);
+            const itemIsCompleted = completedTopics.includes(topic.id);
             const isActive = topic.id === selectedTopicId;
 
             return (
@@ -52,7 +63,7 @@ export default function TopicBrowser({ topics }) {
                 className={isActive ? "active" : ""}
               >
                 {/* Display checkmark if completed */}
-                {isCompleted ? (
+                {itemIsCompleted ? (
                   <span style={{ color: "green", marginRight: "6px" }}>✓</span>
                 ) : (
                   <span style={{ marginRight: "14px" }} />
@@ -73,7 +84,12 @@ export default function TopicBrowser({ topics }) {
               <p key={idx}>{para}</p>
             ))}
 
-            <button onClick={handleCompleteLesson}>Complete Lesson</button>
+            {/* Conditionally render buttons */}
+            {isCompleted ? (
+              <button onClick={handleRevisitLesson}>Revisit Lesson</button>
+            ) : (
+              <button onClick={handleCompleteLesson}>Complete Lesson</button>
+            )}
           </div>
         ) : (
           <p>Please select a topic from the left.</p>
