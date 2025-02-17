@@ -1,0 +1,26 @@
+/* TopicBrowser.css */
+.topic-browser {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.topic-list-column {
+  flex: 0 0 250px;
+  background: #f2f2f2;
+  padding: 1rem;
+  border-radius: 6px;
+}
+
+/* Example: show the user which topic is currently active */
+.topic-list li.active {
+  background-color: #ddd;
+  font-weight: bold;
+}
+
+.topic-details-column {
+  flex: 1;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 6px;
+}

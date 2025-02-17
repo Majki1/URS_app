@@ -1,0 +1,148 @@
+/* App.css */
+
+/* Global styles */
+body {
+  margin: 0;
+  font-family: "Helvetica Neue", sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.container {
+  width: 90%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Navigation bar */
+nav {
+  background-color: #333;
+  padding: 1rem;
+}
+
+nav a {
+  color: #fff;
+  margin-right: 1rem;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: #ffb703;
+}
+
+/* Fade-in animation used by several containers */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* TopicList styles */
+.topic-list {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 1rem;
+}
+
+.topic-list li {
+  background: #fff;
+  margin: 0.5rem 0;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.topic-list li:hover {
+  transform: scale(1.02);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.topic-list li a {
+  color: #333;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+/* TopicPage styles */
+.topic-page {
+  background: #fff;
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 6px;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.topic-page h2 {
+  margin: 0 0 1rem 0;
+}
+
+.topic-page p {
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+/* Quiz styles */
+.quiz-container {
+  background: #fff;
+  padding: 1.5rem;
+  margin-top: 1rem;
+  border-radius: 6px;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.quiz-container h2 {
+  margin-bottom: 1rem;
+}
+
+.quiz-container p {
+  margin-bottom: 1rem;
+}
+
+.quiz-container ul {
+  list-style: none;
+  padding: 0;
+}
+
+.quiz-container li {
+  background: #eee;
+  margin-bottom: 0.5rem;
+  padding: 0.75rem;
+  border-radius: 5px;
+  transition: background 0.2s ease, transform 0.2s ease;
+  cursor: pointer;
+}
+
+.quiz-container li:hover {
+  background: #ddd;
+  transform: scale(0.98);
+}
+/* In your App.css (or wherever you keep styles) */
+
+.quiz-container ul li {
+  margin-bottom: 0.5rem;
+  background: #eee;
+  border-radius: 4px;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.quiz-container ul li:hover {
+  background: #ddd;
+}
+
+.quiz-container h3 {
+  margin-top: 1rem;
+}

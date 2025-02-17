@@ -1,0 +1,365 @@
+[
+  {
+    "id": "q1",
+    "topicId": "registers",
+    "questionText": "What is the primary function of the Stack Pointer (SP) register?",
+    "options": [
+      "Storing the program counter (PC)",
+      "Holding the address of the next instruction",
+      "Pointing to the top of the stack for temporary data storage",
+      "Storing the return address for subroutine calls"
+    ],
+    "correctAnswer": "Pointing to the top of the stack for temporary data storage"
+  },
+  {
+    "id": "q2",
+    "topicId": "memory_storage",
+    "questionText": "Where is the program code typically stored in a microcontroller?",
+    "options": ["SRAM", "Flash Memory", "Registers", "Cache"],
+    "correctAnswer": "Flash Memory"
+  },
+  {
+    "id": "q3",
+    "topicId": "memory_map",
+    "questionText": "True or False: The memory map of a microcontroller typically follows a descending addressing scheme, where the highest address is at the start.",
+    "options": ["True", "False"],
+    "correctAnswer": "False"
+  },
+  {
+    "id": "q4",
+    "topicId": "integer_ranges",
+    "questionText": "What is the maximum value that can be represented by an unsigned 8-bit integer?",
+    "options": ["127", "128", "255", "256"],
+    "correctAnswer": "255"
+  },
+  {
+    "id": "q5",
+    "topicId": "endianness",
+    "questionText": "In big-endian format, which byte of a multi-byte data type is stored at the lowest memory address?",
+    "options": ["Most significant byte", "Least significant byte"],
+    "correctAnswer": "Most significant byte"
+  },
+  {
+    "id": "q6",
+    "topicId": "sign_extension",
+    "questionText": "Fill in the blank: Sign extension is the process of _______ a number with fewer bits to a larger number of bits while preserving its value and sign.",
+    "options": ["increasing", "extending", "reducing", "compressing"],
+    "correctAnswer": "extending"
+  },
+  {
+    "id": "q7",
+    "topicId": "addressing_modes",
+    "questionText": "Which addressing mode uses a constant value as an offset to calculate the memory address?",
+    "options": [
+      "Offset in register",
+      "Immediate offset",
+      "Pre-index",
+      "Post-index"
+    ],
+    "correctAnswer": "Immediate offset"
+  },
+  {
+    "id": "q8",
+    "topicId": "stmxx_ldmxx",
+    "questionText": "Which instruction is used to load values from multiple registers into consecutive memory locations?",
+    "options": ["STMxx", "LDMxx"],
+    "correctAnswer": "LDMxx"
+  },
+  {
+    "id": "q9",
+    "topicId": "stack_implementation",
+    "questionText": "In a Full Descending stack, where does the Stack Pointer (SP) point?",
+    "options": ["The next free address", "The last occupied address"],
+    "correctAnswer": "The last occupied address"
+  },
+  {
+    "id": "q10",
+    "topicId": "conditional_instructions",
+    "questionText": "What type of instruction is executed regardless of any condition?",
+    "options": [
+      "Conditional branch instruction",
+      "Unconditional branch instruction"
+    ],
+    "correctAnswer": "Unconditional branch instruction"
+  },
+  {
+    "id": "q11",
+    "topicId": "cmp_tst_teq",
+    "questionText": "Which instruction is used to perform a bitwise AND operation between two operands but does not store the result?",
+    "options": ["CMP", "TST", "TEQ"],
+    "correctAnswer": "TST"
+  },
+  {
+    "id": "q12",
+    "topicId": "program_loops",
+    "questionText": "True or False: It's impossible to implement a 'while' loop in assembly language.",
+    "options": ["True", "False"],
+    "correctAnswer": "False"
+  },
+  {
+    "id": "q13",
+    "topicId": "argument_passing",
+    "questionText": "According to the ARM Procedure Call Standard (APCS), how are the first four arguments typically passed to a subroutine?",
+    "options": [
+      "Through registers r0-r3",
+      "On the stack",
+      "Through global variables"
+    ],
+    "correctAnswer": "Through registers r0-r3"
+  },
+  {
+    "id": "q14",
+    "topicId": "subroutine_calls",
+    "questionText": "What potential issue can arise with the Link Register (LR) during nested subroutine calls?",
+    "options": [
+      "LR can be overwritten, losing the return address of the original caller",
+      "LR can become corrupted, leading to unpredictable program behavior",
+      "LR can overflow, causing a stack overflow error"
+    ],
+    "correctAnswer": "LR can be overwritten, losing the return address of the original caller"
+  },
+  {
+    "id": "q15",
+    "topicId": "register_preservation",
+    "questionText": "In subroutine calls, who is generally responsible for preserving the values of registers that need to be used across the call?",
+    "options": ["The caller", "The callee"],
+    "correctAnswer": "The callee"
+  },
+  {
+    "id": "q16",
+    "topicId": "calling_assembly_from_c",
+    "questionText": "How would you pass five arguments to an assembly function from C code?",
+    "options": [
+      "Through registers r0-r4",
+      "By pushing them onto the stack",
+      "Using a combination of registers and the stack"
+    ],
+    "correctAnswer": "Using a combination of registers and the stack"
+  },
+  {
+    "id": "q17",
+    "topicId": "calling_c_from_assembly",
+    "questionText": "How would you call a C function named 'my_c_function' from assembly code?",
+    "options": [
+      "By using the 'BL' instruction followed by the function name",
+      "By pushing the function name onto the stack and then using the 'BX' instruction",
+      "By loading the function's address into a register and then using the 'BX' instruction"
+    ],
+    "correctAnswer": "By using the 'BL' instruction followed by the function name"
+  },
+  {
+    "id": "q18",
+    "topicId": "variables_assembly_to_c",
+    "questionText": "Which keyword is used to embed assembly code directly within C code?",
+    "options": ["asm", "inline", "assembly"],
+    "correctAnswer": "asm"
+  },
+  {
+    "id": "q19",
+    "topicId": "variables_c_to_assembly",
+    "questionText": "How can you access a variable named 'my_c_variable' defined in C code from your assembly code?",
+    "options": [
+      "By using the 'EXTERN' directive to declare the variable",
+      "By directly accessing the variable's memory address",
+      "By passing the variable as an argument to the assembly function"
+    ],
+    "correctAnswer": "By using the 'EXTERN' directive to declare the variable"
+  },
+  {
+    "id": "q20",
+    "topicId": "internal_clock_config",
+    "questionText": "What does HSI stand for in the context of microcontroller clock sources?",
+    "options": [
+      "High Speed Internal",
+      "High Speed Input",
+      "Hardware Serial Interface"
+    ],
+    "correctAnswer": "High Speed Internal"
+  },
+  {
+    "id": "q21",
+    "topicId": "interrupts_polling",
+    "questionText": "Which of the following is an advantage of using interrupts over polling?",
+    "options": [
+      "More efficient use of CPU resources",
+      "Simpler implementation",
+      "Lower latency in responding to events"
+    ],
+    "correctAnswer": "More efficient use of CPU resources"
+  },
+  {
+    "id": "q22",
+    "topicId": "lr_register_interrupts",
+    "questionText": "What role does the Link Register (LR) play in interrupt handling?",
+    "options": [
+      "It stores the address of the interrupt handler",
+      "It stores the address of the interrupted instruction, allowing the program to return to that point after handling the interrupt",
+      "It stores the interrupt priority level"
+    ],
+    "correctAnswer": "It stores the address of the interrupted instruction, allowing the program to return to that point after handling the interrupt"
+  },
+  {
+    "id": "q23",
+    "topicId": "auto_unstacking",
+    "questionText": "What does auto-stacking refer to in interrupt handling?",
+    "options": [
+      "The automatic saving of certain registers onto the stack when an interrupt occurs",
+      "The automatic clearing of the stack when an interrupt occurs",
+      "The automatic disabling of interrupts when an interrupt occurs"
+    ],
+    "correctAnswer": "The automatic saving of certain registers onto the stack when an interrupt occurs"
+  },
+  {
+    "id": "q24",
+    "topicId": "interrupt_vector_table",
+    "questionText": "What does the interrupt vector table contain?",
+    "options": [
+      "The addresses of interrupt handlers",
+      "The priority levels of interrupts",
+      "The status of interrupt masking"
+    ],
+    "correctAnswer": "The addresses of interrupt handlers"
+  },
+  {
+    "id": "q25",
+    "topicId": "interrupt_enabling_priorities",
+    "questionText": "True or False: It's not possible to assign different priorities to different interrupts.",
+    "options": ["True", "False"],
+    "correctAnswer": "False"
+  },
+  {
+    "id": "q26",
+    "topicId": "interrupt_masking",
+    "questionText": "What does masking an interrupt mean?",
+    "options": [
+      "Temporarily disabling the interrupt",
+      "Permanently disabling the interrupt",
+      "Changing the interrupt's priority level"
+    ],
+    "correctAnswer": "Temporarily disabling the interrupt"
+  },
+  {
+    "id": "q27",
+    "topicId": "systick_timer",
+    "questionText": "What is the primary function of the SysTick timer?",
+    "options": [
+      "Generating periodic interrupts",
+      "Measuring the execution time of instructions",
+      "Providing real-time clock functionality"
+    ],
+    "correctAnswer": "Generating periodic interrupts"
+  },
+  {
+    "id": "q28",
+    "topicId": "external_interrupts_gpio",
+    "questionText": "How can you configure a GPIO pin to trigger an interrupt on a rising edge?",
+    "options": [
+      "By setting the corresponding bit in the GPIO's 'EXTI' register",
+      "By configuring the pin's mode to 'input with interrupt'",
+      "By enabling the 'rising edge trigger' option in the pin's configuration"
+    ],
+    "correctAnswer": "By enabling the 'rising edge trigger' option in the pin's configuration"
+  },
+  {
+    "id": "q29",
+    "topicId": "fixed_point_numbers",
+    "questionText": "What is a key advantage of using fixed-point numbers over floating-point numbers in certain embedded systems applications?",
+    "options": [
+      "Higher precision",
+      "Greater dynamic range",
+      "Simpler and faster arithmetic operations"
+    ],
+    "correctAnswer": "Simpler and faster arithmetic operations"
+  },
+  {
+    "id": "q30",
+    "topicId": "floating_point_numbers",
+    "questionText": "What type of error can occur when representing decimal numbers as floating-point numbers due to the limited number of bits available?",
+    "options": ["Rounding error", "Overflow error", "Underflow error"],
+    "correctAnswer": "Rounding error"
+  },
+  {
+    "id": "q31",
+    "topicId": "structures_for_peripherals",
+    "questionText": "How can structures be used to access microcontroller peripheral registers in C?",
+    "options": [
+      "By defining a structure with members that map to the register addresses",
+      "By using pointers to directly access the register addresses",
+      "By using inline assembly to access the registers"
+    ],
+    "correctAnswer": "By defining a structure with members that map to the register addresses"
+  },
+  {
+    "id": "q32",
+    "topicId": "gpio_modes",
+    "questionText": "Which GPIO register is used to set the output data on a GPIO pin?",
+    "options": ["BSRR", "BRR", "MODE"],
+    "correctAnswer": "BSRR"
+  },
+  {
+    "id": "q33",
+    "topicId": "pull_up_resistors",
+    "questionText": "What is the primary function of a pull-up resistor?",
+    "options": [
+      "To ensure a default high logic level on a pin",
+      "To ensure a default low logic level on a pin",
+      "To limit the current flowing through a pin"
+    ],
+    "correctAnswer": "To ensure a default high logic level on a pin"
+  },
+  {
+    "id": "q34",
+    "topicId": "pull_down_resistors",
+    "questionText": "What is the primary function of a pull-down resistor?",
+    "options": [
+      "To ensure a default low logic level on a pin",
+      "To ensure a default high logic level on a pin",
+      "To protect the pin from overvoltage"
+    ],
+    "correctAnswer": "To ensure a default low logic level on a pin"
+  },
+  {
+    "id": "q35",
+    "topicId": "open_drain_outputs",
+    "questionText": "What is a characteristic of an open-drain output?",
+    "options": [
+      "It can only output a high logic level",
+      "It can only output a low logic level",
+      "It can output both high and low logic levels"
+    ],
+    "correctAnswer": "It can only output a low logic level"
+  },
+  {
+    "id": "q36",
+    "topicId": "schmitt_trigger",
+    "questionText": "What is the primary function of a Schmitt trigger?",
+    "options": [
+      "To amplify weak signals",
+      "To convert analog signals to digital signals",
+      "To provide hysteresis, which helps in cleaning up noisy signals"
+    ],
+    "correctAnswer": "To provide hysteresis, which helps in cleaning up noisy signals"
+  },
+  {
+    "id": "q37",
+    "topicId": "numeric_keypad",
+    "questionText": "What is the 'debounce problem' in the context of a numeric keypad?",
+    "options": [
+      "The keypad buttons bouncing back up after being pressed, potentially leading to multiple key presses being registered",
+      "The keypad failing to register key presses due to mechanical wear and tear",
+      "The keypad becoming unresponsive due to software errors"
+    ],
+    "correctAnswer": "The keypad buttons bouncing back up after being pressed, potentially leading to multiple key presses being registered"
+  },
+  {
+    "id": "q38",
+    "topicId": "rtc",
+    "questionText": "What is the primary function of a Real-Time Clock (RTC)?",
+    "options": [
+      "To generate precise timing signals for the microcontroller",
+      "To keep track of calendar time, even when the microcontroller is powered off",
+      "To control the execution speed of the microcontroller"
+    ],
+    "correctAnswer": "To keep track of calendar time, even when the microcontroller is powered off"
+  }
+]

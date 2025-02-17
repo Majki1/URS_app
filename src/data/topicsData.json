@@ -1,0 +1,368 @@
+[
+  {
+    "id": "registers",
+    "title": "Registers SP, LR, and PC",
+    "summary": "Explanation of the purpose of Stack Pointer (SP), Link Register (LR), and Program Counter (PC) registers with example of subroutine call.",
+    "content": [
+      "SP points to the top of the stack for temporary data.",
+      "LR stores the return address for subroutine calls.",
+      "PC holds the address of the next instruction."
+    ]
+  },
+  {
+    "id": "memory_storage",
+    "title": "Memory Storage of Code and Data",
+    "summary": "How code and data are stored in memory.",
+    "content": [
+      "Code is stored in Flash memory.",
+      "Data is stored in SRAM.",
+      "Example with variables and arrays in C."
+    ]
+  },
+  {
+    "id": "memory_map",
+    "title": "Memory Map of the Microcontroller",
+    "summary": "Explanation of the memory map of the used microcontroller.",
+    "content": [
+      "Reference to the microcontroller's reference manual.",
+      "Ascending addressing scheme.",
+      "Reserved addresses and memory blocks."
+    ]
+  },
+  {
+    "id": "integer_ranges",
+    "title": "Integer Ranges and Overflow/Underflow",
+    "summary": "Ranges of signed and unsigned integers representable with a given number of bits, and examples of overflow and underflow.",
+    "content": [
+      "Signed integers can represent positive and negative numbers.",
+      "Unsigned integers can only represent non-negative numbers.",
+      "Explanation of overflow and underflow with examples."
+    ]
+  },
+  {
+    "id": "endianness",
+    "title": "Endianness",
+    "summary": "Concept of endianness.",
+    "content": [
+      "Big-endian: Most significant byte stored first.",
+      "Little-endian: Least significant byte stored first."
+    ]
+  },
+  {
+    "id": "sign_extension",
+    "title": "Sign Extension",
+    "summary": "Explanation of sign extension with an example.",
+    "content": [
+      "Process of extending a number with fewer bits to a larger number of bits.",
+      "Preserves the value and sign of the number.",
+      "Example with a negative number."
+    ]
+  },
+  {
+    "id": "addressing_modes",
+    "title": "Addressing Modes",
+    "summary": "Explanation of addressing modes with examples (pre/post [with/without update]/immediate).",
+    "content": [
+      "Offset in register: Uses content of registers for address calculation.",
+      "Immediate Offset: Uses immediate value as offset.",
+      "Pre-index, Post-index, and Pre-index with Update."
+    ]
+  },
+  {
+    "id": "stmxx_ldmxx",
+    "title": "STMxx and LDMxx Instructions",
+    "summary": "Explanation of instructions for writing and reading multiple registers.",
+    "content": [
+      "STMxx: Stores multiple registers in memory locations.",
+      "LDMxx: Loads values from multiple registers.",
+      "Diagrams for writing and reading from multiple registers."
+    ]
+  },
+  {
+    "id": "stack_implementation",
+    "title": "Stack Implementation",
+    "summary": "Implementation of Full Descending, Empty Descending, Full Ascending, and Empty Ascending stacks using instructions for writing multiple registers.",
+    "content": [
+      "Full: Stack Pointer points to the last occupied address.",
+      "Empty: Stack Pointer points to the next free address.",
+      "Descending: New data stored at lower memory addresses.",
+      "Ascending: New data stored at higher memory addresses.",
+      "PUSH and POP instructions."
+    ]
+  },
+  {
+    "id": "conditional_instructions",
+    "title": "Conditional and Unconditional Instructions, Condition Codes",
+    "summary": "Explanation of conditional and unconditional instructions and condition codes for numbers with and without sign.",
+    "content": [
+      "Unconditional branch instructions.",
+      "Conditional codes and their meanings.",
+      "Signed vs. Unsigned numbers."
+    ]
+  },
+  {
+    "id": "numbers_with_without_sign",
+    "title": "Numbers with and without Sign",
+    "summary": "Explanation of numbers with and without sign.",
+    "content": ["Reference to presentation Chapter_06_ARM_Flow_Control.pdf."]
+  },
+  {
+    "id": "cmp_tst_teq",
+    "title": "CMP, TST, TEQ Instructions and Their Application",
+    "summary": "Explanation of CMP, TST, and TEQ instructions and their use.",
+    "content": ["Reference to presentation Chapter_06_ARM_Flow_Control.pdf."]
+  },
+  {
+    "id": "program_loops",
+    "title": "Program Loops in Assembly",
+    "summary": "Implementation of program loops in assembly (for/while/do while).",
+    "content": ["Example: Implementing a for loop in assembly."]
+  },
+  {
+    "id": "argument_passing",
+    "title": "Argument Passing According to APCS",
+    "summary": "How arguments are passed according to the ARM Procedure Call Standard (APCS).",
+    "content": ["Reference to presentation or documentation on APCS."]
+  },
+  {
+    "id": "subroutine_calls",
+    "title": "Subroutine Calls and the LR Register",
+    "summary": "How subroutines call other subroutines and the issue with the LR register.",
+    "content": [
+      "Explanation of nested subroutine calls.",
+      "Potential problem with LR register being overwritten."
+    ]
+  },
+  {
+    "id": "register_preservation",
+    "title": "Preserving Register Values in Subroutine Calls",
+    "summary": "The need for preserving register values and who is responsible for it during subroutine calls.",
+    "content": [
+      "Importance of saving register values.",
+      "Caller vs. callee responsibility."
+    ]
+  },
+  {
+    "id": "calling_assembly_from_c",
+    "title": "Calling Assembly Function from C",
+    "summary": "How to call an assembly function from C and pass 5 arguments.",
+    "content": ["Example code snippet."]
+  },
+  {
+    "id": "calling_c_from_assembly",
+    "title": "Calling C Function from Assembly",
+    "summary": "How to call a C function from assembly and pass 5 arguments.",
+    "content": ["Example code snippet."]
+  },
+  {
+    "id": "variables_assembly_to_c",
+    "title": "Variables from Assembly in C",
+    "summary": "How to use variables defined in assembly within C code.",
+    "content": ["Inline assembly example.", "Global variables example."]
+  },
+  {
+    "id": "variables_c_to_assembly",
+    "title": "Variables from C in Assembly",
+    "summary": "How to use variables defined in C within assembly code.",
+    "content": [
+      "Extern keyword example.",
+      "Passing variables as arguments example."
+    ]
+  },
+  {
+    "id": "internal_clock_config",
+    "title": "Configuration of Internal Clock Sources",
+    "summary": "Internal clock sources in the microcontroller and their configuration (HSI, MSI, PLL).",
+    "content": [
+      "Explanation of different clock sources.",
+      "Conceptual configuration."
+    ]
+  },
+  {
+    "id": "interrupts_polling",
+    "title": "Interrupts and Polling",
+    "summary": "Differences, advantages, and disadvantages of interrupts and polling.",
+    "content": [
+      "Explanation of interrupt mechanism.",
+      "Comparison with polling."
+    ]
+  },
+  {
+    "id": "lr_register_interrupts",
+    "title": "LR Register in Interrupt Handling",
+    "summary": "Use of LR register in interrupt handling.",
+    "content": ["Explanation of LR's role in returning from interrupts."]
+  },
+  {
+    "id": "auto_unstacking",
+    "title": "Auto-(Un)stacking in Interrupt Handling",
+    "summary": "Auto-stacking and unstacking of registers during interrupt handling.",
+    "content": ["Explanation of automatic saving and restoring of registers."]
+  },
+  {
+    "id": "interrupt_vector_table",
+    "title": "Interrupt Vector Table and Negative Interrupt Numbers",
+    "summary": "Use of the interrupt vector table and negative interrupt numbers.",
+    "content": [
+      "Structure and purpose of the interrupt vector table.",
+      "Significance of negative interrupt numbers."
+    ]
+  },
+  {
+    "id": "interrupt_enabling_priorities",
+    "title": "Enabling and Prioritizing Interrupts",
+    "summary": "Enabling and setting priorities for interrupts.",
+    "content": [
+      "How to enable and disable interrupts.",
+      "Interrupt priority levels."
+    ]
+  },
+  {
+    "id": "interrupt_masking",
+    "title": "Interrupt Masking",
+    "summary": "Masking of interrupts.",
+    "content": ["Selective disabling of interrupts."]
+  },
+  {
+    "id": "interrupt_handling",
+    "title": "Interrupt Handling",
+    "summary": "Process of handling interrupts.",
+    "content": ["Steps involved in responding to interrupts."]
+  },
+  {
+    "id": "systick_timer",
+    "title": "SysTick Timer",
+    "summary": "SysTick timer's mode of operation and application.",
+    "content": [
+      "Explanation of SysTick timer functionality.",
+      "Configuration and use cases."
+    ]
+  },
+  {
+    "id": "external_interrupts_gpio",
+    "title": "External Interrupts on GPIO Pins",
+    "summary": "External interrupts on GPIO pins and their configuration.",
+    "content": ["How to configure GPIO pins for external interrupts."]
+  },
+  {
+    "id": "fixed_point_numbers",
+    "title": "Fixed-Point Numbers",
+    "summary": "Advantages and disadvantages of fixed-point numbers.",
+    "content": [
+      "Explanation of fixed-point representation.",
+      "Conversion between fixed-point and decimal."
+    ]
+  },
+  {
+    "id": "floating_point_numbers",
+    "title": "Floating-Point Numbers",
+    "summary": "Potential problems and solutions associated with floating-point numbers.",
+    "content": [
+      "Rounding errors.",
+      "Error accumulation.",
+      "Inaccurate arithmetic."
+    ]
+  },
+  {
+    "id": "structures_for_peripherals",
+    "title": "Using Structures for Peripherals in C",
+    "summary": "Use of structures in C for accessing microcontroller peripheral registers.",
+    "content": ["Example with GPIO registers."]
+  },
+  {
+    "id": "gpio_modes",
+    "title": "GPIO Modes of Operation",
+    "summary": "GPIO modes of operation (BSRR, BRR, MODE registers).",
+    "content": [
+      "Explanation of different GPIO modes.",
+      "Functions of BSRR, BRR, and MODE registers."
+    ]
+  },
+  {
+    "id": "pull_up_resistors",
+    "title": "Pull-up Resistors",
+    "summary": "Function and purpose of pull-up resistors.",
+    "content": ["Explanation of pull-up resistor behavior."]
+  },
+  {
+    "id": "pull_down_resistors",
+    "title": "Pull-down Resistors",
+    "summary": "Function and purpose of pull-down resistors.",
+    "content": ["Explanation of pull-down resistor behavior."]
+  },
+  {
+    "id": "open_drain_outputs",
+    "title": "Open-Drain Outputs",
+    "summary": "Mode of operation and application of open-drain outputs.",
+    "content": ["Explanation of open-drain output behavior."]
+  },
+  {
+    "id": "schmitt_trigger",
+    "title": "Schmitt Trigger",
+    "summary": "Mode of operation and application of Schmitt trigger.",
+    "content": ["Explanation of Schmitt trigger functionality."]
+  },
+  {
+    "id": "numeric_keypad",
+    "title": "Numeric Keypad 4x3 and Debounce Problem",
+    "summary": "Functioning and reading of a simple numeric 4x3 keypad and the debounce problem.",
+    "content": ["Explanation of keypad scanning.", "Debouncing techniques."]
+  },
+  {
+    "id": "rtc",
+    "title": "RTC and Its Applications",
+    "summary": "RTC and its applications, including the problem of oscillator accuracy.",
+    "content": [
+      "Explanation of Real-Time Clock (RTC).",
+      "Use cases and challenges."
+    ]
+  },
+  {
+    "id": "timer_input_capture",
+    "title": "Timer Input Capture Mode",
+    "summary": "Use of timer in input capture mode.",
+    "content": ["Conceptual explanation."]
+  },
+  {
+    "id": "timer_output_compare",
+    "title": "Timer Output Compare Mode",
+    "summary": "Use of timer in output compare mode with toggle change on external pin.",
+    "content": ["Conceptual explanation and sketch."]
+  },
+  {
+    "id": "timer_pwm_mode",
+    "title": "Timer PWM Mode",
+    "summary": "Use of timer in PWM mode.",
+    "content": ["Conceptual explanation and sketches for different PWM modes."]
+  },
+  {
+    "id": "dma_mode",
+    "title": "DMA Mode",
+    "summary": "DMA mode of operation and application.",
+    "content": ["Conceptual explanation."]
+  },
+  {
+    "id": "ad_da_converters",
+    "title": "AD and DA Converters",
+    "summary": "Quantization error, resolution of AD converter, AD conversion modes, analog watchdog, and DA converter operation.",
+    "content": ["Explanation of ADC and DAC.", "Error considerations."]
+  },
+  {
+    "id": "i2c",
+    "title": "I2C",
+    "summary": "I2C bus operation, communication example, and arbitration.",
+    "content": ["Explanation of I2C protocol.", "Addressing and data transfer."]
+  },
+  {
+    "id": "spi",
+    "title": "SPI",
+    "summary": "SPI bus operation.",
+    "content": ["Explanation of SPI protocol."]
+  },
+  {
+    "id": "uart",
+    "title": "Serial Communication via UART",
+    "summary": "Serial communication using UART - synchronization, frame, communication parameters.",
+    "content": ["Explanation of UART communication."]
+  }
+]
