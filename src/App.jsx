@@ -16,7 +16,7 @@ function App() {
   return (
     <Router>
       <div className="container">
-        <nav>
+        <nav className="nav">
           <Link to="/">Home</Link> | <Link to="/topics">Topics</Link> |{" "}
           <Link to="/quiz">Quiz</Link>
         </nav>
